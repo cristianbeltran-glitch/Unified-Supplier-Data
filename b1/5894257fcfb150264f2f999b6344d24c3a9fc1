@@ -1,0 +1,67 @@
+.gitignore
+  s_0ec1d6269904ec::t_3b1e8b41b2fa47 1-13
+README.md
+  s_0ec1d6269904ec::t_8bfb3f5a3a1039 1-60
+assets/alert-error-20.svg
+  s_0ec1d6269904ec::t_73a53e0e699e5b 1-5
+assets/check-box-empty.svg
+  s_0ec1d6269904ec::t_819ecb812dfa54 1-8
+assets/check-box-fill.svg
+  s_0ec1d6269904ec::t_e6ae60ff6b3a51 1-8
+assets/check-circle-fill.svg
+  s_0ec1d6269904ec::t_5dd5a8a9b51fe3 1-5
+assets/divider.svg
+  s_0ec1d6269904ec::t_ed7d930f64818e 1-7
+assets/hdr-bell.svg
+  s_0ec1d6269904ec::t_98a5c92e0b7e76 1-6
+assets/hdr-cart.svg
+  s_0ec1d6269904ec::t_7418eae0b9f5e9 1-5
+assets/hdr-help.svg
+  s_0ec1d6269904ec::t_b10475baae2917 1-5
+assets/hdr-search.svg
+  s_0ec1d6269904ec::t_1cf99974629dc1 1-5
+assets/hdr-workbench.svg
+  s_0ec1d6269904ec::t_b5de8e979b1b68 1-5
+assets/info-fill.svg
+  s_0ec1d6269904ec::t_2a2faee3e90dfa 1-5
+assets/info-outline.svg
+  s_0ec1d6269904ec::t_a4de0b2e12fadf 1-5
+assets/logo-fill.svg
+  s_0ec1d6269904ec::t_1652b8563a6f2c 1-10
+assets/logo-mask.svg
+  s_0ec1d6269904ec::t_24ea29283f5f87 1-5
+assets/modal-close-16.svg
+  s_0ec1d6269904ec::t_2f5ecd4e901d5e 1-5
+assets/modal-close-outline.svg
+  s_0ec1d6269904ec::t_bae51eb186dd8b 1-5
+assets/modal-error-20.svg
+  s_0ec1d6269904ec::t_20f2c6ef968753 1-5
+assets/nav-home.svg
+  s_0ec1d6269904ec::t_0c09d37a14c485 1-10
+assets/radio-empty.svg
+  s_0ec1d6269904ec::t_b79686adefa670 1-8
+assets/radio-selected.svg
+  s_0ec1d6269904ec::t_61b8aa31cc7d06 1-5
+assets/step-line-1024.svg
+  s_0ec1d6269904ec::t_77d3406403c9b6 1-5
+assets/step-line-1146.svg
+  s_0ec1d6269904ec::t_c264a205981491 1-5
+supplier-data-sync-flow.html
+  s_0ec1d6269904ec::t_481ca17e40d1b4 1-1425
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b15894257fcfb150264f2f999b6344d24c3a9fc1",
+  "prompts": {},
+  "sessions": {
+    "s_0ec1d6269904ec": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "0913b2ff-5cff-4feb-a5e9-1933c7cf286b",
+        "model": "claude-opus-5"
+      },
+      "human_author": "cristianbeltran-glitch <cristianbeltran-glitch@users.noreply.github.com>"
+    }
+  }
+}
