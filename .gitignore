@@ -1,0 +1,13 @@
+# Raw Figma design-context dumps used while building the prototype.
+# They contain internal node IDs and internal Confluence links, so they stay local.
+step2_outline.txt
+step2_text.txt
+step3_text.txt
+
+# Scratch reference captures from the design file.
+shots/
+
+# Scratch probe harnesses written during verification.
+_*.html
+
+.DS_Store

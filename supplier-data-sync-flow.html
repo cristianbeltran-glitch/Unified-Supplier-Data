@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Prepare to adopt Unified Supplier — clickable flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wdth,wght,YTLC@0,6..12,75..125,200..1000,440..540&family=Open+Sans:wght@300..800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Tokens taken from the Figma file (Coupa Clarity)
+   ============================================================ */
+:root{
+  --t1:#1b1f28; --t2:#455468; --t3:#607590; --t5:#fcfcfd;
+  --b2:#e1e8ef;
+  --s1:#ffffff; --s2:#fcfcfd; --s4:#ebf0f4;
+  --primary:#0059d6; --primary-subtle-border:#0971f1; --primary-subtle-surface:#e0efff; --primary-text:#0342b0;
+  --red-subtle-surface:#ffe0e7; --red-subtle-border:#e70848; --red-text:#a80539;
+  --green-subtle-surface:#d6fff3; --green-subtle-border:#008571;
+  --neutral-subtle-border:#4f6077;
+  --orange-subtle-surface:#ffe5c8; --orange-subtle-border:#ff9900;
+  --card-border:#eff0f1;
+  --coupa-blue:#268ecd; --coupa-link:#009be0; --coupa-grey:#2f2f2f; --coupa-orange:#f37025;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#4a5560}
+body{
+  font-family:'Nunito Sans',sans-serif;
+  font-variation-settings:"YTLC" 500,"wdth" 100;
+  -webkit-font-smoothing:antialiased;
+}
+img{display:block}
+ul,ol{list-style-position:outside}
+
+/* ---------- prototype scaffolding (NOT part of the Figma design) ---------- */
+#protobar{
+  position:fixed;left:0;top:0;width:100%;z-index:9000;
+  background:#20262e;color:#cfd8e3;font:12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  display:flex;align-items:center;gap:6px;padding:7px 12px;flex-wrap:wrap;
+  border-bottom:1px solid #000;
+}
+#protobar b{color:#8fb4ff;font-weight:600;letter-spacing:.4px;margin-right:6px}
+#protobar button{
+  font:inherit;color:#cfd8e3;background:#2d3540;border:1px solid #3d4756;
+  border-radius:4px;padding:4px 8px;cursor:pointer;
+}
+#protobar button:hover{background:#3a434f}
+#protobar button.cur{background:#8fb4ff;color:#20262e;border-color:#8fb4ff}
+#protobar .sp{width:1px;height:16px;background:#3d4756;margin:0 4px}
+#protobar .hint{margin-left:auto;opacity:.55}
+#stage{padding:46px 0 0}
+
+/* ---------- screens / frames ---------- */
+.screen{display:none}
+.screen.on{display:block}
+.frame{position:relative;width:1440px;margin:0 auto;overflow:hidden;background:var(--s2)}
+.frame.h1024{height:1024px}
+.frame.h1041{height:1041px}
+.band{position:absolute;left:0;width:1440px}
+
+/* ---------- header (2:2063 / 2:2064) ---------- */
+.hdr{top:0;height:61px;background:var(--s2)}
+.hdr-inner{position:absolute;left:15px;top:0;width:1410px;height:61px;display:flex;align-items:flex-start;justify-content:center;padding:10px 0}
+.hdr-cont{flex:1 0 0;min-width:1px;min-height:41px;display:flex;flex-direction:column;align-items:flex-start;align-self:stretch}
+.hdr-nav{display:flex;align-items:flex-start;justify-content:space-between;min-height:39px;width:100%}
+.hdr-left{display:flex;align-items:flex-start;align-self:stretch}
+.hdr-m{width:12px}
+.hdr-mcol{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding-right:12px;height:100%}
+.hdr-row40{display:flex;align-items:center;height:40px}
+.search-wrap{position:relative;display:flex;align-items:center;align-self:stretch;padding-right:16px}
+.search{background:#eff0f1;border:1px solid #eff0f1;height:36px;width:560px;max-width:560px;min-width:255px;
+  border-radius:18px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
+  padding:6px 37px 6px 17px;overflow:hidden}
+.search p{font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;color:#6a6a6a;white-space:nowrap}
+.search-ico{position:absolute;right:28px;top:9px;width:18px;height:18px}
+.search-ico img{position:absolute;inset:0;width:100%;height:100%;max-width:none}
+.hdr-right{flex:1 0 0;min-width:252px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;padding-left:558px;align-self:stretch}
+.hdr-cluster{display:flex;align-items:flex-start;height:40px}
+.hdr-ring{border:1px solid transparent;padding:1px;border-radius:19px}
+.hdr-circle{background:#eff0f1;border-radius:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center}
+.hdr-ico16{position:relative;width:16px;height:16px}
+.hdr-ico16 img,.hdr-ico24 img{position:absolute;inset:0;width:100%;height:100%;max-width:none}
+.hdr-ico24{position:relative;width:24px;height:24px}
+.avatar{background:#fabffd;width:36px;min-height:36px;border-radius:18px;display:flex;align-items:center;justify-content:center;
+  padding:9.5px 0 10px;font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#590a55;text-align:center}
+.cart-stack{position:relative;display:flex;flex-direction:column;align-items:flex-start;align-self:stretch}
+.cart-badge{position:absolute;right:-18.48px;top:-12px;background:#df0f0f;height:16px;min-width:22px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;padding:0 7.94px;
+  font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:11px;color:#fff}
+.wb-btn{background:#eff0f1;border-radius:20px;padding:8px;display:flex;align-items:center;justify-content:center}
+
+/* ---------- main menu (2:2035) ---------- */
+.mainnav{top:61px;height:42px;background:#fff}
+.menubar{position:absolute;left:16px;top:6px;display:flex;gap:5px}
+.mi{height:28px;border:1px solid #fff;border-radius:28px;display:flex;align-items:center;justify-content:center;
+  font-family:'Open Sans',Arial,sans-serif;font-size:16px;line-height:20px;color:var(--coupa-grey);white-space:nowrap;cursor:default}
+.mi.active{background:var(--coupa-blue);border-color:var(--coupa-blue);color:#fff}
+.mi img{width:24px;height:20px}
+
+/* ---------- blue rule + secondary menu ---------- */
+.bluebar{top:103px;height:4px;background:var(--coupa-blue)}
+.secnav{top:107px;height:36px;background:#f7f7f7;border-radius:4px 4px 0 0;padding:4px 0 4px 20px}
+.secbar{display:flex;gap:4px;width:836.6px}
+.si{padding:3.5px 13px 3.52px;border:1px solid transparent;display:flex;align-items:center;justify-content:center;
+  font-family:'Open Sans',Arial,sans-serif;font-size:14px;line-height:20px;color:var(--coupa-grey);white-space:nowrap;cursor:default}
+.si.cur{color:var(--coupa-orange);text-decoration:underline}
+
+/* ---------- coupa footer (2:2117) ---------- */
+.cfooter{top:927px;height:97.48px;background:#fff;border-top:4px solid var(--coupa-blue)}
+.ft-logo{position:absolute;left:647.5px;top:14px;width:105px;height:28px;display:flex;justify-content:center;padding-bottom:3px}
+.ft-clip{position:relative;width:105px;height:28px;overflow:hidden}
+.ft-fill{position:absolute;left:0;top:0;width:105px;height:28px;display:flex;flex-direction:column;align-items:flex-start;padding-right:6px}
+/* Figma wraps the logo in a mask whose shape is a full-bleed 99x28 black
+   rectangle — i.e. the mask only clips to the box. The equivalent clip is used
+   here because CSS mask-image is blocked on file:// origins, which would make
+   the logo vanish when this file is opened directly. assets/logo-mask.svg is
+   kept alongside the other assets. */
+.ft-maskbox{position:relative;width:99px;height:28px;overflow:hidden}
+.ft-mask{position:absolute;left:0;right:0;top:0;bottom:3.84%}
+.ft-over{position:absolute;left:0;top:0;width:105px;height:28px;overflow:hidden;pointer-events:none}
+.ft-row{position:absolute;left:0;top:52.48px;width:1440px;display:flex;align-items:center;justify-content:center;gap:8px;
+  font-family:Helvetica,Arial,sans-serif;font-size:13px;color:var(--coupa-grey)}
+.ft-row .sep{opacity:.8}
+.ft-lang{display:flex;align-items:center;gap:5px}
+.ft-link{color:var(--coupa-link)}
+
+/* ---------- wizard page ---------- */
+.wpage{position:absolute;left:0;width:1440px;background:var(--s2)}
+/* Dialog Title frame: 126 tall with the subtitle, 105 without; the title text
+   itself always starts 32px down from the frame top */
+.dlg-title{padding-top:32px;height:105px}
+.dlg-title.withsub{height:126px}
+.dlg-title h1{width:438px;height:41px;font-size:28px;font-weight:700;line-height:40.012px;color:var(--t1)}
+.dlg-title .sub{height:21px;font-size:14px;font-weight:600;line-height:21px;color:var(--t2)}
+
+/* ---------- stepper (70:9423) ---------- */
+.stepper{display:flex;align-items:center;height:32px;width:100%}
+.step{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+.step-ico{width:32px;height:32px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+  font-size:14px;line-height:20px;flex:0 0 auto}
+.step-ico.on{background:var(--primary-subtle-surface);border:1px solid var(--primary-subtle-border);color:var(--primary);font-weight:700}
+.step-ico.off{background:#fff;border:1px solid var(--b2);color:var(--t2);font-weight:400}
+.step-ico img{width:32px;height:32px}
+.step-label{font-size:14px;font-weight:600;line-height:20px;color:var(--t1);max-width:800px;min-width:80px;white-space:nowrap}
+.step-label.done{color:var(--primary)}
+.step-label.dim{color:var(--t2)}
+.step-line{position:relative;flex:1 0 0;min-width:56px;height:32px}
+.step-line img{position:absolute;inset:0;width:100%;height:100%;max-width:none}
+
+/* ---------- cards ---------- */
+.card{background:#fff;border-radius:16px;
+  box-shadow:inset 0 0 0 1px var(--card-border), 0 2px 8px 0 rgba(0,0,0,.03);position:relative}
+.card.pad{padding:24px}
+.h4{font-size:20px;font-weight:700;line-height:32px;color:var(--t1)}
+.h-card{font-size:16px;font-weight:700;line-height:24px;color:var(--t1)}
+.body2{font-size:14px;font-weight:400;line-height:20px;color:var(--t1)}
+.body2.t2{color:var(--t2)}
+.sub-sem{font-size:14px;font-weight:600;line-height:21px;color:var(--t2)}
+
+/* ---------- buttons ---------- */
+.btn-primary{background:var(--primary);border:none;border-radius:12px;padding:8px 20px;display:flex;align-items:center;
+  justify-content:center;gap:10px;color:var(--t5);font:600 16px/24px 'Nunito Sans',sans-serif;
+  font-variation-settings:"YTLC" 500,"wdth" 100;cursor:pointer;white-space:nowrap}
+.btn-primary[disabled]{opacity:.5;cursor:not-allowed}
+.btn-primary.dim{opacity:.5}
+.btn-outlined{background:#fff;border:1px solid var(--b2);border-radius:12px;padding:8px 20px;display:flex;align-items:center;
+  justify-content:center;gap:10px;color:var(--primary);font:600 16px/24px 'Nunito Sans',sans-serif;
+  font-variation-settings:"YTLC" 500,"wdth" 100;cursor:pointer;white-space:nowrap}
+.btn-back{background:transparent;border:1px solid #d5dee7;border-radius:10px;padding:8px 22px;width:112px;height:42px;
+  display:flex;align-items:center;justify-content:center;color:#607590;
+  font:600 15px/26px 'Nunito Sans',sans-serif;letter-spacing:.3px;
+  font-variation-settings:"YTLC" 500,"wdth" 100;cursor:pointer}
+.btn-text{background:none;border:none;color:var(--primary);font:600 16px/24px 'Nunito Sans',sans-serif;
+  font-variation-settings:"YTLC" 500,"wdth" 100;cursor:pointer;padding:4px 8px}
+
+/* ---------- chips / badges ---------- */
+/* Strokes are drawn inside the frame in the design and add no layout size,
+   so they are inset shadows here: a chip stays exactly 28px tall. */
+.chip{--chip-bd:var(--b2);
+  display:inline-flex;align-items:center;padding:4px;border-radius:100px;box-shadow:inset 0 0 0 1px var(--chip-bd);
+  background:transparent;flex:0 0 auto;white-space:nowrap}
+.chip .typo{display:flex;flex-direction:column;align-items:flex-start;padding:0 6px}
+.chip .typo p{font-size:12px;font-weight:400;line-height:16px;color:var(--t1)}
+.chip .endico{display:flex;flex-direction:column;align-items:flex-end}
+.chip .badge{display:flex;align-items:center;justify-content:center;padding:0 6px;border-radius:14px;height:20px;
+  font-size:13px;font-weight:600;line-height:20px;color:var(--t1)}
+.chip.sel{background:var(--primary);--chip-bd:transparent}
+.chip.sel .typo p,.chip.sel .badge{color:var(--t5)}
+.chip.sel .badge{background:rgba(159,205,254,.4);overflow:hidden}
+.chip.dis{opacity:.5}
+.chip.link{cursor:pointer}
+.chip.green{background:var(--green-subtle-surface);--chip-bd:var(--green-subtle-border)}
+.chip.red{background:var(--red-subtle-surface);--chip-bd:var(--red-subtle-border)}
+.chip.neutral{background:var(--s4);--chip-bd:var(--neutral-subtle-border)}
+.chip.orange{background:var(--orange-subtle-surface);--chip-bd:var(--orange-subtle-border)}
+.sec-badge{background:var(--s2);padding:4px;display:flex;flex-direction:column;align-items:flex-end}
+.sec-badge > span{background:var(--s4);padding:0 6px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:600;line-height:20px;color:var(--t1)}
+
+/* ---------- alerts ---------- */
+.alert{display:flex;gap:8px;align-items:flex-start;border-radius:4px;padding:16px;overflow:hidden;width:100%}
+.alert .ih{display:flex;height:28px;align-items:center;padding:2px 0;flex:0 0 auto}
+.alert .ico20{position:relative;width:20px;height:20px}
+.alert .ico20 img{position:absolute;inset:0;width:100%;height:100%;max-width:none}
+.alert .content{flex:1 0 0;min-width:1px;display:flex;flex-direction:column;gap:4px}
+.alert .titlerow{display:flex;gap:8px;height:28px;align-items:center;width:100%}
+.alert .atitle{flex:1 0 0;min-width:1px;font-size:16px;font-weight:700;line-height:24px}
+.alert .btnbox{flex:0 0 auto}            /* empty Button Container from the design */
+.alert .abody{font-size:14px;font-weight:400;line-height:20px}
+.alert.info{background:var(--primary-subtle-surface);color:var(--primary-text)}
+.alert.info .atitle,.alert.info .abody{color:var(--primary-text)}
+.alert.callout{background:#fff;border:1px solid var(--primary-subtle-border);color:var(--primary-text)}
+.alert.callout .atitle,.alert.callout .abody{color:var(--primary-text)}
+.alert.err{background:var(--red-subtle-surface)}
+.alert.err .atitle,.alert.err .abody{color:var(--red-text)}
+.alert.oneline{align-items:center;padding:6px 10px;gap:8px}
+.alert.oneline .strip{display:flex;flex:1 0 0;align-self:stretch;align-items:center;justify-content:space-between;min-width:1px}
+.alert.oneline .msg{font-size:14px;font-weight:700;line-height:20px;color:var(--red-text);white-space:nowrap}
+.alert .closebtn{display:flex;gap:10px;height:28px;min-height:28px;align-items:center;justify-content:center;padding:6px;
+  border-radius:100px;border:none;background:none;cursor:pointer;flex:0 0 auto}
+.alert .ico16{display:flex;align-items:center;justify-content:center;width:16px;height:16px}
+.alert a{color:inherit;font-weight:800;text-decoration:underline;text-underline-position:from-font}
+.alert ol{margin:0}
+.alert ol li{margin-left:21px;font-size:14px;line-height:20px}
+
+/* ---------- step 1 card (absolute, exactly as in Figma) ---------- */
+.s1card{width:1024px;height:512px}
+.s1head{position:absolute;left:24px;top:24px;width:976px;height:49px}
+.s1head .t{font-size:16px;font-weight:700;line-height:24px;color:var(--t1)}
+.s1head .d{position:absolute;left:0;top:28px;width:976px;height:21px;font-size:14px;font-weight:600;line-height:21px;color:var(--t2)}
+.s1row{position:absolute;left:24px;top:89px;width:976px;height:262px}
+.s1sub{position:absolute;top:0;width:480px;height:262px;background:#fff;border:1px solid var(--card-border);
+  border-radius:16px;box-shadow:0 2px 8px 0 rgba(0,0,0,.03)}
+.s1sub.l{left:0}
+.s1sub.r{left:496px}
+.s1sub .hd{position:absolute;left:24px;width:432px}
+.s1sub .hd p{font-size:14px;font-weight:400;line-height:20px;color:var(--t2)}
+.s1sub .tc{position:absolute;left:24px;width:432px}
+.s1sub .tc ul{font-size:14px;font-weight:400;line-height:20px}
+.s1sub .divider{position:absolute;left:24px;width:432px;height:1px}
+.s1sub .divider img{width:432px;height:1px}
+.s1sub .act{position:absolute;left:24px;width:432px;height:40px;display:flex;justify-content:flex-end}
+.s1check{position:absolute;left:24px;top:367px;width:684px;height:32px;display:flex;align-items:center;gap:8px;cursor:pointer}
+.s1check img{width:32px;height:32px;flex:0 0 auto}
+.s1check span{font-size:14px;font-weight:600;line-height:20px;color:var(--t1)}
+.s1foot{position:absolute;left:24px;top:415px;width:976px;height:40px;display:flex;justify-content:flex-end}
+
+/* ---------- tables ---------- */
+.tsection{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+.tsection .shead{display:flex;flex-direction:column;gap:8px;width:100%}
+.tsection .stitle{display:flex;gap:10px;align-items:center}
+.tsection .ssub{font-size:14px;font-weight:400;line-height:20px;color:var(--t2);width:100%}
+.tbl{display:grid;width:100%;border-radius:16px}
+.thead,.tcell{padding:16px;border-bottom:1px solid var(--b2);background:rgba(0,0,0,0);position:relative}
+.thead{display:flex;align-items:flex-start;min-height:79px}
+.thead p{flex:1 0 0;min-width:1px;font-family:'Nunito Sans',sans-serif;font-weight:500;letter-spacing:.17px;color:var(--t1)}
+.thead .b{font-weight:700;font-size:14px;line-height:24px}
+.thead .s{font-weight:600;font-size:13px;line-height:20px}
+.tcell{display:flex;align-items:center}
+.tcell .box{flex:1 0 0;min-width:1px;display:flex;flex-direction:column;align-items:flex-start}
+.tcell .p1{font-size:14px;font-weight:400;line-height:20px;color:var(--t1);white-space:pre-line}
+.tcell .p1.mute{color:var(--t3)}
+.tcell .meta{font-size:0}
+.tcell .meta .fn{font-size:13px;font-weight:600;line-height:20px;color:var(--t3)}
+.tcell .meta .ty{font-size:12px;font-weight:400;line-height:16px;color:var(--t3)}
+.tcell .inchip{position:absolute;height:20px;padding:4px;border-radius:100px;display:flex;align-items:center;
+  background:var(--s4);border:1px solid var(--neutral-subtle-border)}
+.tcell .inchip p{font-size:12px;font-weight:400;line-height:16px;color:var(--t1);padding:0 6px}
+
+/* ---------- field discrepancies (extra step) ---------- */
+/* Reuses .tbl / .thead / .tcell, so this is literally the same Clarity-styled
+   table component step 2 uses — only the count and the two action controls are
+   new. The count and its total sit on one line, so .dof shares the 20px line
+   box rather than starting a second row. */
+.dcount{font-size:14px;font-weight:600;line-height:20px;color:var(--t1);white-space:nowrap}
+.dof{font-size:12px;font-weight:400;line-height:20px;color:var(--t3)}
+.dbtn{font:600 13px/20px 'Nunito Sans',sans-serif;color:var(--primary);background:#fff;
+  border:1px solid var(--b2);border-radius:8px;padding:4px 12px;cursor:pointer;white-space:nowrap}
+.dbtn:hover{background:var(--s4)}
+.dbtn[disabled]{color:var(--t3);background:var(--s2);cursor:not-allowed;opacity:.55}
+.dstack{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.dstack .nm{font-size:12px;font-weight:400;line-height:16px;color:var(--t2);word-break:break-all}
+.dlink{background:none;border:none;padding:0;font:600 12px/16px 'Nunito Sans',sans-serif;
+  color:var(--primary);cursor:pointer;text-decoration:underline;text-underline-position:from-font}
+
+/* ---------- step 3 ---------- */
+/* Each card is a two-question state machine, so it grows as answers come in.
+   The design holds every variant at a fixed height with inconsistent bottom
+   slack (19px on the default, 61px once the second question appears, up to
+   82px); min-height keeps the untouched card at the designed 330 and lets the
+   answered states be content-driven instead of jumping to uneven dead space. */
+.s3grid{display:grid;grid-template-columns:557px 557px;gap:32px;align-items:start;margin-top:32px}
+.s3card{width:557px;min-height:330px;padding:24px;display:flex;flex-direction:column;gap:16px;overflow:hidden}
+.s3card .ttl{display:flex;flex-direction:column;gap:4px}
+/* Title row is 23px tall in the design (717:1911) with the 32px line box
+   overflowing by 4.5px top and bottom; line-height:23px puts the baseline
+   at the same offset from the row top. */
+.s3card .ttl .h4{height:23px;line-height:23px}
+.s3card .ttl p{font-size:14px;font-weight:400;line-height:20px;color:var(--t2)}
+.s3stats{display:flex;gap:16px;width:100%}
+/* The design's 1px stroke is drawn inside the frame and does not consume
+   layout space, so it is an inset shadow here rather than a border. */
+.s3box{background:#f5f7fa;box-shadow:inset 0 0 0 1px var(--b2);border-radius:8px;padding:8px 16px 16px;flex:1 0 0;min-width:1px;
+  display:flex;flex-direction:column;gap:4px}
+.s3box .lb{font-size:14px;font-weight:600;line-height:20px;color:var(--t1)}
+.s3box .vl{font-size:16px;font-weight:700;line-height:24px;color:var(--t1)}
+.s3q{background:#f5f7fa;box-shadow:inset 0 0 0 1px var(--b2);border-radius:8px;padding:8px 16px 16px;width:100%;
+  display:flex;flex-direction:column;gap:16px;flex-shrink:0}
+.s3q .lbw{display:flex;flex-direction:column;gap:4px;width:100%}
+.s3q .lb{font-size:14px;font-weight:600;line-height:20px;color:var(--t1)}
+.s3q .hint{font-size:12px;font-weight:400;line-height:16px;color:var(--t2)}
+/* Buttons Container is gap 16 between the two radios (717:2479: Yes 62px at
+   x0, No 59px at x78) and each Radio Button is gap 8 icon-to-label. */
+.s3radios{display:flex;gap:16px}
+.s3radio{display:flex;align-items:center;gap:8px;cursor:pointer;overflow:hidden}
+/* Unselected is the 32x32 icon on its own; selected is a 24x24 icon inside a
+   4px padded wrapper, which comes to the same 32x32 footprint. */
+.s3rb{display:flex;align-items:center;padding:4px;border-radius:14px}
+.s3radio .lbl{font-size:14px;font-weight:600;line-height:20px;color:var(--t1);white-space:nowrap}
+/* Alert 32:17142. Single-line instances are shorter than padding + line box,
+   so the title is centred and bleeds past the frame exactly as in the design. */
+.s3alert{width:509px;padding:16px;background:#e0efff;border-radius:4px;flex-shrink:0;
+  display:flex;gap:8px;align-items:center;overflow:hidden}
+.s3alert .ac{flex:1 0 0;min-width:1px;height:100%;display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.s3alert .at{flex:1 0 0;min-height:1px;width:100%;display:flex;gap:8px;align-items:center;justify-content:flex-end}
+.s3alert .at p{flex:1 0 0;min-width:1px;font-size:14px;font-weight:700;line-height:20px;color:#0342b0}
+.s3alert .ad{width:100%;font-size:14px;font-weight:400;line-height:20px;color:#0342b0}
+.s3alert .lk{text-decoration:underline;text-decoration-skip-ink:none;text-underline-position:from-font}
+.s3alert .ad.lk{font-weight:400}
+.s3alert .ad .lk{font-weight:600}
+
+/* ---------- bottom bar ---------- */
+.bottombar{position:absolute;left:0;width:1440px;height:74px;background:#fff;border:1px solid var(--b2);
+  box-shadow:0 -2px 2px 0 rgba(0,0,0,.1)}
+.bottombar .grp{position:absolute;left:1062px;top:16px;width:233px;height:42px}
+.bottombar .grp > *:nth-child(1){position:absolute;left:0;top:0}
+.bottombar .grp > *:nth-child(2){position:absolute;left:122px;top:0}
+
+/* ---------- modal (447:1519) ---------- */
+#scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:8000;display:none;align-items:center;justify-content:center}
+#scrim.on{display:flex}
+.modal{position:relative;width:544px;height:335px;background:#fff;border-radius:16px;
+  box-shadow:0 8px 32px 0 rgba(0,0,0,.18)}
+.modal .mtitle{position:absolute;left:24px;top:24px;width:496px;height:32px;display:flex;align-items:flex-start;justify-content:space-between}
+.modal .mtitle h2{font-size:20px;font-weight:700;line-height:32px;color:var(--t1)}
+.modal .mtitle button{background:none;border:none;cursor:pointer;width:24px;height:24px;padding:2px;
+  border-radius:10px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.modal .mbody{position:absolute;left:24px;top:80px;width:496px;height:40px;font-size:14px;font-weight:400;line-height:20px;color:var(--t1)}
+.modal .malert{position:absolute;left:24px;top:144px;width:496px;min-height:104px;border-radius:8px}
+.modal .macts{position:absolute;left:24px;top:272px;width:496px;height:32px;display:flex;align-items:center;justify-content:flex-end;gap:16px}
+.modal .macts .btn-primary{padding:4px 20px}
+
+/* ---------- setup page (2:1397) ---------- */
+.setup-main{position:absolute;left:0;top:143px;width:1440px;height:898px;background:#fff}
+.setup-border{position:absolute;left:226px;top:0;width:988px;height:898px;
+  border-left:1px solid #e6e6e6;border-right:1px solid #e6e6e6}
+.setup-h1{position:absolute;left:16px;top:0;width:956px;height:62px}
+.setup-h1 h1{position:absolute;left:0;top:12px;font-family:'Open Sans',Arial,sans-serif;font-size:28px;font-weight:400;
+  line-height:38px;color:var(--coupa-grey)}
+/* Figma clips this container at 815px; the scroll keeps the clipped column
+   stack reachable without shifting layout (scrollbar is hidden). */
+.setup-cont{position:absolute;left:16px;top:82.81px;width:956px;height:815px;overflow-y:auto;overflow-x:hidden;
+  scrollbar-width:none;-ms-overflow-style:none}
+.setup-cont::-webkit-scrollbar{display:none}
+.setup-filter{position:relative;width:956px;height:38px;background:#f7f7f7;margin-top:-0.57px}
+.setup-filter .inner{position:absolute;left:586.95px;top:5px;width:364.05px;height:28px}
+.setup-filter .lab{position:absolute;left:-5px;top:2.9px;width:202.68px;height:24px;
+  font-family:'Open Sans',Arial,sans-serif;font-size:13px;font-weight:700;line-height:24px;color:#60768a;white-space:nowrap}
+.setup-filter .inp{position:absolute;left:205.93px;top:0;width:147.5px;height:28px;background:#fff;border:1px solid #cfd5da}
+.setup-filter .clr{position:absolute;left:357.05px;top:5.4px;width:7px;height:15.5px;
+  font-family:'Open Sans',Arial,sans-serif;font-size:13px;line-height:15.5px;color:#60768a}
+.setup-cols{position:relative;width:956px;margin-top:9.43px}
+.setup-col{position:absolute;top:0;width:299.51px}
+.setup-panel{background:#f7f7f7;border:1px solid #e6e6e6;margin-bottom:25px}
+.setup-panel h3{height:31.97px;background:var(--coupa-blue);display:flex;align-items:center;
+  padding:0 10px;font-family:'Open Sans',Arial,sans-serif;font-size:13px;font-weight:700;line-height:31.97px;color:#fff}
+.setup-panel ul{list-style:none;padding:11px 11px}
+.setup-panel li{height:21px;display:flex;align-items:center}
+.setup-panel a{font-family:'Open Sans',Arial,sans-serif;font-size:13px;line-height:21px;color:var(--coupa-link);
+  text-decoration:none;cursor:pointer}
+.setup-panel a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<!-- ===== prototype scaffolding: not a Figma component ===== -->
+<div id="protobar">
+  <b>PROTOTYPE</b>
+  <button data-go="setup">Setup</button>
+  <div class="sp"></div>
+  <button data-go="step1a">1 · unchecked</button>
+  <button data-go="step1b">1 · checked</button>
+  <button data-go="step2a">2 · Details</button>
+  <button data-go="step2b">2 · Addresses</button>
+  <button data-go="fields">3 · Discrepancies</button>
+  <button data-go="step3">4 · Sites &amp; Remit-to</button>
+  <div class="sp"></div>
+  <button data-go="err2">E · stepper top</button>
+  <button data-go="err1">E · verify first</button>
+  <button data-go="err3">E · checked</button>
+  <button data-go="err4">E · can't proceed</button>
+  <div class="sp"></div>
+  <button data-go="setup">Restart</button>
+  <span class="hint">Happy path starts at Setup → “Prepare to adopt Unified Supplier”</span>
+</div>
+
+<div id="stage"></div>
+
+<div id="scrim">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="Confirm changes">
+    <div class="mtitle">
+      <h2>Confirm changes</h2>
+      <button type="button" data-act="modal-close" aria-label="Close">
+        <img src="assets/modal-close-outline.svg" width="20" height="20" alt="">
+      </button>
+    </div>
+    <p class="mbody">Confirming applies your custom field mapping and sub-object matching keys to the Unified Supplier Record.</p>
+    <div class="alert err malert">
+      <div class="ih"><div class="ico20"><img src="assets/modal-error-20.svg" width="20" height="20" alt=""></div></div>
+      <div class="content" style="gap:8px">
+        <p class="abody" style="font-weight:700">You can’t undo these changes once confirmed.</p>
+        <p class="abody">Created fields can’t be deleted and matching keys can’t be changed afterwards. To adjust anything, contact Coupa support.</p>
+      </div>
+    </div>
+    <div class="macts">
+      <button type="button" class="btn-text" data-act="modal-close" style="width:76px;height:32px">Cancel</button>
+      <button type="button" class="btn-primary" data-act="modal-confirm" style="width:142px;height:32px">Confirm Changes</button>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" id="setup-data">{"c1": [{"title": "Company Setup", "items": ["Company Information", "Adoption Dashboard", "Company Addresses", "Users", "Groups", "Projects", "User Form Responses", "Departments", "Categories", "Commodities", "Commodity Translations", "Coupa Taxonomy", "UNSPSC Commodity Mappings", "Roles", "Permissions", "Content Groups", "Approvals", "Manage Delegates", "Units of Measure", "Inventory Warehouses", "Inspection Codes", "Security Controls", "Custom Fields", "Custom Field Translations", "Lookups", "Lookup Values", "Dashboard Controls", "Enterprises", "Translations", "Object Translations", "Translation Suggestions", "Machine Translations", "Company Calendar", "Legal Entities", "Legal Entity Security Groups"]}, {"title": "Home Page", "items": ["Guided Requests", "Home Page Content", "Home Page Layout"]}, {"title": "Financial Setup", "items": ["Accounts", "Account Groups", "Chart of Accounts", "Tax Registrations", "Account Validation Rules", "Receiving Tolerances", "Budget Periods", "Budget Lines", "Currencies", "Exchange Rates", "Tax Codes", "Tax Code Rules", "Tax Rates", "Tax Rate Types", "Tax References", "Field Mapping", "Payment Terms", "Shipping Terms", "Fiscal Years", "Financial Counterparties", "External GL Accounts", "Account Categories", "Company Financial Accounts", "Company Financial Accounts File Status", "Company Financial Account Defaults"]}, {"title": "Analytics", "items": ["Analytics Setup"]}, {"title": "Contracts", "items": ["Contract Types", "Contract Collaboration Setup", "Contract Templates", "Contract Lines", "Contract Party Roles"]}], "c2": [{"title": "Procurement", "items": ["Buying Policies", "PO Customization", "Featured iRequest Sites", "Manage Requisitions", "Manage Purchase Orders", "Manage Work Confirmations", "Manage RFQs", "Order Lists", "Order List Lines", "Price Comparisons", "Purchasing Classification Engine", "Requisition Line Form Responses", "Demand Aggregation Rules"]}, {"title": "Services Procurement", "items": ["Services Procurement Settings", "Document Types", "External Identifier Types", "Job Categories", "Job Levels", "Job Role Master Rates", "Job Role Premium Rates", "Job Roles", "Job Titles", "National Identifier Types", "Skills", "Workers", "Worker Compliance Policies", "Worker Compliance Form Responses"]}, {"title": "Platform", "items": ["App Marketplace", "'Ask an Expert' Categories", "Custom Footer", "Custom Objects", "Export to Accounting", "Forms", "General Form Responses", "Installed Apps and Content", "Installed Marketplace Apps", "IFrames and Panels", "Menu Configuration", "Notifications", "Process Step History", "Presentations", "Process Translations", "Process Automator", "Process Instances", "Project Templates", "Questionnaires", "Reported Employee Reviews", "Scheduled Processes", "Scheduler Processes Run Errors", "Tags", "Tagged Objects", "User Reassignments", "Web Forms", "Global Alerts", "Custom Notification Templates", "Attachment Classifications", "Task Configurations", "Sensitive Configurations"]}, {"title": "Integrations", "items": ["Integrations Control Center", "Integrations", "Integration Contacts", "Integration Runs", "Integration Errors", "Integration Warnings", "Integration Documentation", "sFTP Accounts", "cXML Errors", "API Dashboard", "E-signature Accounts", "Call Outs", "API Filters", "Data Mappings", "API Keys", "IP Whitelisting Configs", "OAuth2/OpenID Connect Clients", "Webhooks"]}, {"title": "Expenses", "items": ["Expense Settings", "Report Score and Accounting Review", "Expense Categories", "Expense Category Translations", "Expense Line Report", "Expense Reports", "Expense Delegates", "Dynamic Category Limits", "Per Diem Settings", "Expense Tax Setup", "Expense Classification Engine", "Expense Travel Category Mapping", "Travel and Expense Integrations", "Expense Attendee Types", "Expense Line Attendees", "Expense Line Taxes", "Expense Preapproval Form Responses", "Mileage Rates"]}, {"title": "Reporting", "items": ["Dashboard", "Content Insights", "Advanced Reporting", "Spend Alerts", "Purchase Order Reports", "Budget Report", "Unreceived Orders Report", "Uninvoiced Orders Report", "Accrual Report", "Requisition Line Report", "Purchase Order Line Report", "Invoice Line Report", "Inventory History Report", "On-Hand Balances Report", "Asset Tracking Report", "Inbound Email", "Outbound Email", "Outbound Blocked Email Addresses", "File Status", "Approvals history", "Manage Scheduled Reports", "Scheduled Report Runs", "Invoice Charges Distribution", "Reason Insights Setup", "Reason Insight Events", "Item Supply and Demand reports", "Order Versions", "Performance"]}], "c3": [{"title": "Suppliers", "items": ["Onboarding Insights", "Business Entities", "Supplier Information", "Supplier Info Form Responses", "Tier 2 Diversity Report Configurations", "Tier 2 Diversity Reports", "Supplier Instructions", "Supplier & SIM Data Sync", "Supplier Certificate Reminders", "Data Sharing Settings", "Supplier Link Requests", "Suppliers", "Remit-To", "Contracts", "Prepare to adopt Unified Supplier", "Supplier Portal Directory", "Supplier Reviews", "Supplier Review Form Response", "Supplier Health", "Supplier Scorecard Configuration"]}, {"title": "Items and Catalogs", "items": ["Item Access Groups", "Item Labels", "Items", "Punchout Sites", "Supplier Item Report", "Supplier Portal Catalogs"]}, {"title": "Inventory", "items": ["Inventory Settings", "Internal Suppliers", "Fulfillment", "Adjust Inventory", "Warehouses", "Warehouse Types", "Default Receiving Locations", "Cycle Count Types", "Replenishment", "Inventory Periods"]}, {"title": "Sourcing", "items": ["Sourcing Settings", "Sourcing Form Responses", "Sourcing Request Form Responses"]}, {"title": "Invoicing", "items": ["Invoice Presentations", "Invoice Tolerances", "Manage Invoices", "Invoice Inboxes", "Requester Access", "Invoice Remit-To Mapping", "cXML Third Party Senders", "Dispute Reasons", "Cash Accounting Scheme References", "Additional CaaS Information"]}, {"title": "Payments", "items": ["Supplier Payment Accounts", "Supplier Payment Accounts File Status", "Payment Partners", "Payment Partner Connections", "Payment Security & Fraud Controls"]}, {"title": "Opportunities", "items": ["Opportunities", "Opportunity Triggers"]}, {"title": "History", "items": ["Revision Records", "Requisitions History", "Requisition Event History", "Purchase Order Event History", "PO Change Event History", "Invoice Event History", "Expense Report Event History", "Data Storage and Retention", "Archive Exports"]}]}</script>
+<script>
+/* ============================================================================
+   Prepare to adopt Unified Supplier — clickable flow
+   Built from Figma file snpCB5DQMqnqO8c9oXDdMP (node 84:53751)
+   Every geometry value and every string below is taken from that file.
+   All imagery is served from ./assets (downloaded from the design).
+   ============================================================================ */
+
+const h = (s) => s;
+const esc = (s) => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+/* ---------------------------------------------------------------- chrome --- */
+function header(){return `
+<div class="band hdr">
+  <div class="hdr-inner">
+    <div class="hdr-cont">
+      <div class="hdr-nav">
+        <div class="hdr-left">
+          <div class="hdr-m"></div>
+          <div class="hdr-mcol">
+            <div class="hdr-row40">
+              <div class="search-wrap">
+                <div class="search"><p>What do you need?</p></div>
+                <div class="search-ico"><img src="assets/hdr-search.svg" width="18" height="18" alt=""></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hdr-right">
+          <div class="hdr-cluster">
+            <div class="hdr-mcol"><div class="hdr-row40"><div class="hdr-ring"><div class="hdr-circle">
+              <div class="avatar">CB</div>
+            </div></div></div></div>
+            <div class="hdr-mcol"><div class="hdr-row40"><div class="hdr-ring"><div class="hdr-circle">
+              <div class="hdr-ico16"><img src="assets/hdr-bell.svg" width="16" height="16" alt="Notifications"></div>
+            </div></div></div></div>
+            <div class="hdr-mcol"><div class="hdr-row40"><div class="hdr-ring"><div class="hdr-circle">
+              <div class="cart-stack">
+                <div class="hdr-ico16"><img src="assets/hdr-cart.svg" width="16" height="16" alt="Cart"></div>
+                <div class="cart-badge">8</div>
+              </div>
+            </div></div></div></div>
+            <div class="hdr-mcol"><div class="hdr-row40">
+              <div class="wb-btn"><div class="hdr-ico24"><img src="assets/hdr-workbench.svg" width="24" height="24" alt="Workbench"></div></div>
+            </div></div>
+            <div class="hdr-mcol"><div class="hdr-row40"><div class="hdr-ring"><div class="hdr-circle">
+              <div class="hdr-ico16"><img src="assets/hdr-help.svg" width="16" height="16" alt="Help"></div>
+            </div></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>`;}
+
+const NAV = [
+  {home:true, w:42},
+  {label:'Travel &amp; Expenses', w:170},
+  {label:'Requests', w:102},
+  {label:'Orders', w:85},
+  {label:'Contingent Workforce', w:197},
+  {label:'Invoices', w:94},
+  {label:'Community', w:120},
+  {label:'Payments', w:107},
+  {label:'Agent Studio', w:129.01},
+  {label:'Setup', w:76, active:true},
+];
+function mainnav(){
+  const items = NAV.map(n =>
+    `<div class="mi${n.active?' active':''}" style="width:${n.w}px">`
+    + (n.home ? `<img src="assets/nav-home.svg" width="24" height="20" alt="Home">` : n.label)
+    + `</div>`).join('');
+  return `<div class="band mainnav"><div class="menubar">${items}`
+    + `<div class="mi" style="width:87px;margin-left:1.83px">More...</div></div></div>`;
+}
+
+const SECNAV = [['All Setup Items',124,1],['Company Info',118],['Accounts',86],['Users',64],
+                ['Approvals',92],['Budget Periods',126],['Budget Lines',111]];
+function secnav(){
+  return `<div class="band secnav"><div class="secbar">`
+    + SECNAV.map(([l,w,c]) => `<div class="si${c?' cur':''}" style="width:${w}px">${l}</div>`).join('')
+    + `</div></div>`;
+}
+
+function coupaFooter(){return `
+<div class="band cfooter">
+  <a class="ft-logo" href="#" onclick="return false">
+    <div class="ft-clip">
+      <div class="ft-fill">
+        <div class="ft-maskbox">
+          <div class="ft-mask"><img src="assets/logo-fill.svg" width="99.0001" height="26.9241" alt=""></div>
+        </div>
+      </div>
+      <div class="ft-over"><img src="assets/footer-logo.png" alt=""></div>
+    </div>
+  </a>
+  <div class="ft-row">
+    <span>Total Spend Management - Make Margins Multiply</span>
+    <span class="sep">&bull;</span>
+    <span class="ft-lang"><img src="assets/footer-flag.png" width="20" height="24" alt="">English (United States)</span>
+    <span class="sep">&bull;</span>
+    <span>Accessibility</span>
+    <span class="sep">&bull;</span>
+    <span class="ft-link">Coupa Cares</span>
+  </div>
+</div>`;}
+
+/* --------------------------------------------------------------- stepper --- */
+/* "Field discrepancies" is the extra step added after the Figma flow was built;
+   the connector SVG has preserveAspectRatio="none" and .step-line is flex:1, so
+   the three lines simply share whatever width the four labels leave over. */
+const STEP_LABELS = ['Prepare Data','Custom fields','Field discrepancies','Sites and Remit to'];
+/* active = 1 | 2 | 3 | 4 ; steps before `active` render as check-circle-fill */
+function stepper(active, width){
+  const line = width === 1146 ? 'assets/step-line-1146.svg' : 'assets/step-line-1024.svg';
+  const lw   = width === 1146 ? 352 : 291;
+  let out = '';
+  for (let i = 1; i <= STEP_LABELS.length; i++){
+    if (i > 1) out += `<div class="step-line"><img src="${line}" width="${lw}" height="32" alt=""></div>`;
+    const done = i < active, on = i === active;
+    out += `<div class="step">`
+      + (done
+          ? `<img class="step-ico" src="assets/check-circle-fill.svg" width="32" height="32" alt="">`
+          : `<div class="step-ico ${on?'on':'off'}">${i}</div>`)
+      + `<div class="step-label ${done?'done':(on?'':'dim')}">${STEP_LABELS[i-1]}</div>`
+      + `</div>`;
+  }
+  return `<div class="stepper" style="width:${width}px">${out}</div>`;
+}
+
+/* ----------------------------------------------------------- step 1 card --- */
+/* opts: {checked, chips, period, next} */
+function step1Card(o){
+  /* left sub-card: with chips (280:16371) or without (347:12749) */
+  const left = o.chips ? `
+    <div class="s1sub l">
+      <div class="hd" style="top:18.5px;height:76px">
+        <div class="h4" style="width:194px;height:32px">Review sync settings</div>
+        <p style="position:absolute;left:0;top:36px;width:432px;height:40px">Confirm that SIM and Supplier Record fields are mapped and synced as expected.</p>
+      </div>
+      <div class="tc" style="top:110.5px;height:60px">
+        <ul style="color:var(--t2)">
+          <li style="margin-left:21px">Enable <b>Standard contacts</b> syncing.<br><br></li>
+          <li style="margin-left:21px">Enable <b>Standard addresses</b> syncing.</li>
+        </ul>
+        <div class="chip green" style="position:absolute;left:268px;top:0;width:66px;height:24px"><div class="typo"><p>Enabled</p></div></div>
+        <div class="chip red" style="position:absolute;left:268px;top:35.5px;height:24px"><div class="typo"><p>Disabled</p></div></div>
+      </div>
+      <div class="divider" style="top:186.5px"><img src="assets/divider.svg" width="432" height="1" alt=""></div>
+      <div class="act" style="top:203.5px">
+        <button type="button" class="btn-outlined" style="width:179px;height:40px">Open sync settings</button>
+      </div>
+    </div>` : `
+    <div class="s1sub l">
+      <div class="hd" style="top:27.5px;height:78px">
+        <div class="h4" style="width:199px;height:32px">Review sync settings.</div>
+        <p style="position:absolute;left:0;top:36px;width:432px;height:42px">Confirm that SIM and Supplier Record fields are mapped and synced as expected.</p>
+      </div>
+      <div class="tc" style="top:121.5px;height:40px">
+        <ul style="color:var(--t2)">
+          <li style="margin-left:21px">Enable <b>Standard contacts</b> syncing.</li>
+          <li style="margin-left:21px">Enable <b>Standard addresses</b> syncing.</li>
+        </ul>
+      </div>
+      <div class="divider" style="top:177.5px"><img src="assets/divider.svg" width="432" height="1" alt=""></div>
+      <div class="act" style="top:194.5px">
+        <button type="button" class="btn-outlined" style="width:179px;height:40px">Open sync settings</button>
+      </div>
+    </div>`;
+
+  return `
+  <div class="card s1card">
+    <div class="s1head">
+      <div class="t">Review sync settings and custom fields before configuring</div>
+      <div class="d">Before configuring the source of truth for migration, make sure the SIM and Supplier Record fields are mapped and synced as expected.</div>
+    </div>
+    <div class="s1row">
+      ${left}
+      <div class="s1sub r">
+        <div class="hd" style="top:24px;height:32px">
+          <div class="h4" style="width:184px;height:32px">Verify custom fields</div>
+        </div>
+        <div class="tc" style="top:72px;height:92px">
+          <ul style="color:var(--t1)">
+            <li style="margin-left:21px">Review mapped custom fields and resolve any connectivity or naming issues before migration.</li>
+            <li style="margin-left:21px">The system will adjust and also copy the data for unique custom fields that exist on the SIM record and Supplier Record.</li>
+          </ul>
+        </div>
+        <div class="divider" style="top:180px"><img src="assets/divider.svg" width="432" height="1" alt=""></div>
+        <div class="act" style="top:197px">
+          <button type="button" class="btn-outlined" style="width:181px;height:40px">Open custom fields</button>
+        </div>
+      </div>
+    </div>
+    <div class="s1check" data-act="${o.toggle || ''}">
+      <img src="assets/${o.checked ? 'check-box-fill' : 'check-box-empty'}.svg" width="32" height="32" alt="">
+      <span>I have verified the sync settings and they are correct. I want to configure source of truth for migration.</span>
+    </div>
+    <div class="s1foot">
+      <button type="button" class="btn-primary${o.dimmed ? ' dim' : ''}" style="width:106px;height:40px"
+        ${o.next ? `data-act="${o.next}"` : ''} ${o.inert ? 'disabled' : ''}>Continue</button>
+    </div>
+  </div>`;
+}
+
+function dialogTitle(withSub){
+  return `<div class="dlg-title${withSub ? ' withsub' : ''}">
+    <h1>Prepare to adopt Unified Supplier</h1>
+    ${withSub ? `<div class="sub">Specify whether Supplier Information Record or the Supplier Record takes precedence for each synced field, then map the key field that links each sub-object.</div>` : ''}
+  </div>`;
+}
+
+/* ------------------------------------------------------- step 1 / errors --- */
+/* layout: header 0-61, main menu 61-103, blue rule 103-107, Main 143-1024,
+   Coupa footer at 927 (frame is 1024 tall). These frames have NO Secondary
+   Menu — only the Setup page Container carries 2:2018.                        */
+function wizardScreen(id, inner){
+  return `<section class="screen" id="${id}"><div class="frame h1024">
+    ${header()}${mainnav()}<div class="band bluebar"></div>
+    <div class="wpage" style="top:143px;height:881px">${inner}</div>
+    ${coupaFooter()}
+  </div></section>`;
+}
+
+function step1Screen(id, o){
+  return wizardScreen(id, `
+    <div style="position:absolute;left:208px;top:0;width:1024px">
+      ${dialogTitle(true)}
+    </div>
+    <div style="position:absolute;left:208px;top:126px;width:1024px">
+      ${stepper(1,1024)}
+      <div style="margin-top:16px">${step1Card(o)}</div>
+    </div>`);
+}
+
+/* err1 (347:12726) — no stepper; the alert is a frame-level child at 205,123 */
+function err1Screen(){
+  return `<section class="screen" id="err1"><div class="frame h1024">
+    ${header()}${mainnav()}<div class="band bluebar"></div>
+    <div class="wpage" style="top:143px;height:881px">
+      <div style="position:absolute;left:208px;top:0;width:1024px">${dialogTitle(true)}</div>
+      <div style="position:absolute;left:208px;top:126px;width:1024px">
+        ${step1Card({checked:false, chips:false, dimmed:true, inert:true, toggle:'err1-check'})}
+      </div>
+    </div>
+    <div style="position:absolute;left:205px;top:123px;width:1031px;height:40px;z-index:50">
+      <div class="alert err oneline">
+        <div class="ih"><div class="ico20"><img src="assets/alert-error-20.svg" width="20" height="20" alt=""></div></div>
+        <div class="strip">
+          <p class="msg">Check that you have already verified the sync settings before to continue.</p>
+          <button type="button" class="closebtn" data-act="go-err2" aria-label="Dismiss">
+            <div class="ico16"><img src="assets/modal-close-16.svg" width="16" height="16" alt=""></div>
+          </button>
+        </div>
+      </div>
+    </div>
+    ${coupaFooter()}
+  </div></section>`;
+}
+
+/* err2 (347:13490) / err3 (347:13715) — stepper above the Dialog Title */
+function errStepperTop(id, o){
+  return wizardScreen(id, `
+    <div style="position:absolute;left:208px;top:0;width:1024px">${stepper(1,1024)}</div>
+    <div style="position:absolute;left:208px;top:32px;width:1024px">${dialogTitle(true)}</div>
+    <div style="position:absolute;left:208px;top:158px;width:1024px">${step1Card(o)}</div>`);
+}
+
+/* err4 (347:12969) — alert 1031x84 then stepper, then title, then card */
+function err4Screen(){
+  return wizardScreen('err4', `
+    <div style="position:absolute;left:204.5px;top:0;width:1031px;height:132px">
+      <div class="alert err" style="height:84px">
+        <div class="ih"><div class="ico20"><img src="assets/alert-error-20.svg" width="20" height="20" alt=""></div></div>
+        <div class="content">
+          <div class="titlerow">
+            <p class="atitle">You can’t proceed</p>
+            <button type="button" class="closebtn" data-act="go-err3" aria-label="Dismiss">
+              <div class="ico16"><img src="assets/modal-close-16.svg" width="16" height="16" alt=""></div>
+            </button>
+          </div>
+          <p class="abody">You can’t proceed because you haven’t enable the standard contact syncing</p>
+        </div>
+      </div>
+      <div style="position:absolute;left:3.5px;top:100px;width:1024px">${stepper(1,1024)}</div>
+    </div>
+    <div style="position:absolute;left:208px;top:132px;width:1024px">${dialogTitle(true)}</div>
+    <div style="position:absolute;left:208px;top:258px;width:1024px">
+      ${step1Card({checked:true, chips:true, dimmed:true, inert:true, toggle:'err4-check'})}
+    </div>`);
+}
+
+/* --------------------------------------------------- step 2 : chip rails --- */
+function viewBySectionChips(tab){
+  const rows = [
+    {label:'Details',                   n: tab==='addresses' ? 2 : 4, key:'details'},
+    {label:'Sites',                     n:2},
+    {label:'Classification',            n:3},
+    {label:'Enterprise Supplier Data',  n:3},
+    {label:'Insurance',                 n:0, dis:true},
+    {label:'Risk',                      n:2},
+    {label:'Tax',                       n:2},
+    {label:'Addresses <span style="color:#607590">(SIM only)</span>', n:2, key:'addresses', plain:'Addresses (SIM only)'},
+  ];
+  return rows.map(r => {
+    const sel = (tab==='details' && r.key==='details') || (tab==='addresses' && r.key==='addresses');
+    const act = r.key && !sel ? ` data-act="tab-${r.key}"` : '';
+    const label = sel && r.key==='addresses' ? 'Addresses <span>(SIM only)</span>' : r.label;
+    return `<div class="chip${sel?' sel':''}${r.dis?' dis':''}${act?' link':''}"${act}>`
+      + `<div class="typo"><p>${label}</p></div>`
+      + `<div class="endico"><div class="badge">${r.n}</div></div></div>`;
+  }).join('');
+}
+
+function viewBySection(tab){
+  const sub = 'Custom fields in “Details” exist on both SIM and the Supplier record.';
+  const callout = tab !== 'addresses' ? '' : `
+    <div class="alert callout" style="margin-top:16px">
+      <div class="ih"><div class="ico20"><img src="assets/info-fill.svg" width="20" height="20" alt=""></div></div>
+      <div class="content">
+        <div class="titlerow">
+          <p class="atitle" style="font-size:14px;line-height:20px">As part of this migration, custom fields for addresses on SIM will be visible under <a href="#" onclick="return false">Setup &gt; Custom fields</a> and select <b style="font-weight:800">Addresses</b> as the object.</p>
+          <div style="width:91px;height:28px;flex:0 0 auto"></div>
+        </div>
+        <div class="abody">
+          <p style="margin-bottom:8px">All of these custom fields will be visible on:</p>
+          <ol>
+            <li>Supplier record addresses</li>
+            <li>Standard addresses</li>
+            <li>Remit-to addressesz</li>
+            <li>Addresses consumed on POs and Invoices</li>
+          </ol>
+        </div>
+      </div>
+    </div>`;
+  return `<div class="card pad" style="width:1146px;padding-bottom:20px">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;flex-direction:column;gap:4px;width:1098px">
+        <div class="h-card" style="width:118px">View by section</div>
+        <div style="width:426px;height:20px;font-size:14px;font-weight:400;line-height:20px;color:var(--t2)">${sub}</div>
+      </div>
+      <div style="display:flex;gap:4px;align-items:flex-start">${viewBySectionChips(tab)}</div>
+    </div>
+    ${callout}
+  </div>`;
+}
+
+function customFieldsHeader(){
+  return `<div class="card pad" style="width:1146px;height:121px">
+    <div style="width:1098px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;height:24px">
+        <div class="h-card">Custom fields</div>
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div class="chip neutral" style="height:24px"><div class="typo"><p>15 on SIM </p></div></div>
+          <div class="chip neutral" style="height:24px"><div class="typo"><p>14 on Supplier Record</p></div></div>
+          <div class="chip orange" style="height:24px"><div class="typo"><p>5 Fields will be created</p></div></div>
+        </div>
+      </div>
+      <div style="margin-top:4px;font-size:14px;font-weight:400;line-height:20px;color:var(--t2)">Each custom field has a prompt, field name, and a “Defaults from” setting. To migrate data, the number of custom fields must match on SIM and Supplier Record. Fields are connected when “Defaults from” is set or when names and types match.</div>
+    </div>
+  </div>`;
+}
+
+function verifyAlert(){
+  return `<div class="card" style="width:1146px;padding:0;border:none;box-shadow:none;background:transparent">
+    <div class="alert info">
+      <div class="ih"><div class="ico20"><img src="assets/info-outline.svg" width="20" height="20" alt=""></div></div>
+      <div class="content">
+        <div class="titlerow"><p class="atitle">Verify Custom Fields</p><div class="btnbox"></div></div>
+        <p class="abody">Verify these custom fields from <a href="#" onclick="return false">Setup &gt; Custom fields</a> and establish the mapping where required. Fields created by the system are included in the existing API Out / API In payloads, so no integration change is needed.</p>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ------------------------------------------------------- step 2 : tables --- */
+const CELL = {
+  field: (p,f,t)      => ({p, f, t}),
+  text:  (s)          => ({p:s}),
+  mute:  (s, br)      => ({p:s, mute:true, br}),
+};
+
+function cellHtml(c, colIndex){
+  if(!c) return `<div class="tcell"></div>`;
+  const chip = c.chip ? `<div class="inchip" style="left:${c.chip.left}px;top:${c.chip.top}px"><p>Inactive</p></div>` : '';
+  const meta = c.f ? `<div class="meta"><span class="fn">${c.f}</span><br><span class="ty">${c.t}</span></div>` : '';
+  const brs  = c.br ? '<br>'.repeat(c.br) : '';
+  return `<div class="tcell"${c.h?` style="min-height:${c.h}px"`:''}>
+      <div class="box">
+        <p class="p1${c.mute?' mute':''}">${c.p}${brs}</p>
+        ${meta}
+      </div>${chip}
+    </div>`;
+}
+
+function tableSection(s){
+  const cols = s.heads.length;
+  let cells = '';
+  /* render column-major, exactly like the Figma "Country" columns, but through a
+     CSS grid so that the row rules line up across columns */
+  for (let c = 0; c < cols; c++){
+    const hd = s.heads[c];
+    cells += `<div class="thead" style="grid-column:${c+1};grid-row:1"><p>`
+      + (hd.s ? `<span class="b">${hd.b}</span><span class="s">${hd.s}</span>` : `<span class="b">${hd.b}</span>`)
+      + `</p></div>`;
+    s.rows.forEach((row, r) => {
+      cells += cellHtml(row[c], c).replace('class="tcell"', `class="tcell" style="grid-column:${c+1};grid-row:${r+2}"`);
+    });
+  }
+  return `<div class="card pad tsection" style="width:1146px">
+    <div class="shead">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div class="stitle">
+          <div class="h4">${s.title}</div>
+          <div class="sec-badge"><span>${s.badge}</span></div>
+        </div>
+        <div class="ssub">${s.sub}</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:16px;width:100%;border-radius:16px">
+      <div style="flex:1 0 0;min-width:1px;display:flex;flex-direction:column;gap:24px;border-radius:16px">
+        <div class="tbl" style="grid-template-columns:repeat(${cols},1fr)">${cells}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+const SUB_CONNECTED = '“Defaults from” is set, or the field name and field type match on both sides. Data can be migrated for these fields.';
+
+const DETAILS_TABLES = [
+  { title:'Connected fields', badge:'5', sub:SUB_CONNECTED,
+    heads:[{b:'SIM', s:' (prompt / field name / type )'},
+           {b:'Supplier record', s:' (prompt / field name / type)'},
+           {b:'Connected By'},
+           {b:'System Action'}],
+    rows:[
+      [CELL.field('Cost Center','cost_center','Lookup'),
+       CELL.field('Cost Center code','cost_center_code','Text Field'),
+       CELL.text('Defaults from:\nSIM · cost_center'),
+       CELL.text('copied with a suffix: cost_center_sim\n(Supplier record)')],
+      [CELL.field('Preferred supplier','preferred_supplier','Checkbox'),
+       CELL.field('Preferred vendor','preferred_supplier','Checkbox'),
+       CELL.text('Same field name and type'),
+       CELL.text('No action required')],
+      [CELL.field('Custom Field 1','custom_field_1','Checkbox'),
+       CELL.field('Custom Field 1','custom_field_1','Checkbox'),
+       CELL.text('Same field name and type'),
+       CELL.text('No action required')],
+      [CELL.field('Custom Field 2','custom_field_2','Dropdown'),
+       CELL.field('Custom Field 2','custom_field_2','Dropdown'),
+       CELL.text('Same field name and type'),
+       CELL.text('No action required')],
+      [CELL.field('Custom Field 3','custom_field_3','Input'),
+       CELL.field('Custom Field 3','custom_field_3','Checkbox'),
+       CELL.text('Same field name and type'),
+       CELL.text('No action required')],
+    ]},
+  { title:'Unique fields - distinct field name on one side only', badge:'2',
+    sub:'The system copies unique fields from SIM to the Supplier record and from the Supplier record to SIM so the totals match.',
+    heads:[{b:'SIM (Prompt / field name / type)'},
+           {b:'Supplier record (prompt / field name / type)'},
+           {b:'System Action'}],
+    rows:[
+      [CELL.field('Onboarding Owner','onboarding_owner','Lookup'),
+       CELL.text('Not present'),
+       CELL.text('Create a corresponding field in Supplier Record\nand also copy data')],
+      [CELL.text('Not present'),
+       CELL.field('Legacy Vendor ID','legacy_vendor_id','Text field'),
+       CELL.text('Create a corresponding field in SIM and also copy data')],
+    ]},
+  { title:'Same field name, different field type', badge:'1',
+    sub:'The system copies the field onto the other table, appending “_sim” or “_supplier_record”. Existing integrations are unaffected — these new fields are already covered by API Out / API In.',
+    heads:[{b:'SIM - (Prompt / field name / type)'},
+           {b:'Supplier record  (Prompt / field name / type)'},
+           {b:'System Action'}],
+    rows:[
+      [CELL.field('Spend band','spend_band','Text Field'),
+       CELL.field('Spend band','spend_band','Number'),
+       CELL.text('Types differ - copied with a suffix: spend_band_sim \n(Supplier record) · spend_band_supplier_record (SIM)')],
+    ]},
+  { title:'Inactive custom fields', badge:'1',
+    sub:'These fields are deactivated on SIM and/or the Supplier record. They are not migrated and no field is created on the other side. Reactivate a field before migration if you still need its data.',
+    heads:[{b:'SIM - (Prompt / field name / type)'},
+           {b:'Supplier record  (Prompt / field name / type)'},
+           {b:'System Action'}],
+    rows:[
+      [Object.assign(CELL.field('Legacy buyer code','legacy_buyer_code','Text Field'), {chip:{left:142, top:10}}),
+       Object.assign(CELL.field('Legacy buyer code','legacy_buyer_code','Text Field'), {chip:{left:138, top:13}}),
+       Object.assign(CELL.text('Copy to Supplier record - onboarding_owner \n(Supplier record)'), {h:88})],
+    ]},
+];
+
+const ADDRESSES_TABLES = [
+  { title:'Connected fields', badge:'6', sub:SUB_CONNECTED,
+    heads:[{b:'SIM - (prompt / field name / type)'},
+           {b:'Supplier record  (prompt / field name / type)'},
+           {b:'System Action'}],
+    rows:[
+      [CELL.field('Delivery instructions','delivery_instructions','Text box'),
+       Object.assign(CELL.mute('Not present'), {h:87}),
+       Object.assign(CELL.text('Copy to Supplier record — delivery_instructions (Supplier record)'), {h:88})],
+      [CELL.field('Address contact','address_contact','Text field'),
+       Object.assign(CELL.mute('Not present'), {h:87}),
+       Object.assign(CELL.text('Copy to Supplier record — address_contact (Supplier record)'), {h:86})],
+      [CELL.field('Custom Field 1','custom_field_1','Checkbox'),
+       CELL.field('Custom Field 1','custom_field_1','Checkbox'),
+       Object.assign(CELL.mute('No action required', 2), {h:87})],
+      [CELL.field('Custom Field 2','custom_field_2','Dropdown'),
+       CELL.field('Custom Field 2','custom_field_2','Dropdown'),
+       Object.assign(CELL.mute('No action required', 2), {h:87})],
+      [CELL.field('Custom Field 3','custom_field_3','Input'),
+       CELL.field('Custom Field 3','custom_field_3','Checkbox'),
+       Object.assign(CELL.mute('No action required', 2), {h:87})],
+    ]},
+  { title:'Inactive custom fields', badge:'1',
+    sub:'These fields are deactivated on SIM and/or the Supplier record. They are not migrated and no field is created on the other side. Reactivate a field before migration if you still need its data.',
+    heads:[{b:'SIM - (Prompt / field name / type)'},
+           {b:'Supplier record  (Prompt / field name / type)'},
+           {b:'System Action'}],
+    rows:[
+      [Object.assign(CELL.field('Legacy buyer code','legacy_buyer_code','Text Field'), {chip:{left:142, top:10}}),
+       CELL.mute('Not present'),
+       Object.assign(CELL.text('Copy to Supplier record - onboarding_owner\n(Supplier record)'), {h:88})],
+    ]},
+];
+
+/* ------------------------------------------------------------- step 2/3 --- */
+/* These frames have no Secondary Menu and no Coupa footer; the Bottom section
+   is pinned over the scroll region. `mainX`/`mainTop` carry the designer's
+   per-frame nudges (Details Main at 0,107 — Addresses and step 3 at 4,108).  */
+function wideScreen(id, mainX, mainTop, inner, bar){
+  return `<section class="screen" id="${id}"><div class="frame h1024">
+    ${header()}${mainnav()}<div class="band bluebar"></div>
+    <div class="wpage" style="top:${mainTop}px;bottom:74px;height:auto;overflow-y:auto">
+      <div style="position:relative;width:1146px;margin:0 0 0 ${mainX + 147}px">${inner}</div>
+    </div>
+    ${bar}
+  </div></section>`;
+}
+
+function bottomBar(o){
+  return `<div class="bottombar" style="left:${o.x}px;top:${o.y}px">
+    <div class="grp">
+      <button type="button" class="btn-back" data-act="${o.backAct}">Back</button>
+      <button type="button" class="btn-primary" style="width:${o.w}px;height:${o.h}px" data-act="${o.act}">${o.label}</button>
+    </div>
+  </div>`;
+}
+
+function step2Screen(id, tab){
+  const addr = tab === 'addresses';
+  const tables = (addr ? ADDRESSES_TABLES : DETAILS_TABLES).map(tableSection).join('');
+  const inner = `
+    ${dialogTitle(false)}
+    <div style="display:flex;flex-direction:column;gap:16px;width:1146px;padding-bottom:24px">
+      ${stepper(2,1146)}
+      ${customFieldsHeader()}
+      ${verifyAlert()}
+      ${viewBySection(tab)}
+      ${tables}
+    </div>`;
+  return wideScreen(id, addr ? 4 : 0, addr ? 108 : 107, inner,
+    bottomBar({x: addr ? 3 : 0, y: addr ? 949 : 950, label:'Continue', w:112, h:40,
+               act:'go-fields', backAct:'go-step1b'}));
+}
+
+/* ------------------------------------- extra step : field discrepancies --- */
+/* Every standard and custom field on the Supplier record with the number of
+   suppliers whose SIM value differs. The Field column carries the display name
+   only — the `supplier.legal_name` secondary line is dropped — but the key is
+   still what names each row's CSV.                                            */
+const DISC_ROWS = [
+  ['Legal name','supplier.legal_name','Standard','Supplier Details','251'],
+  ['DBA / trade name','supplier.dba_name','Standard','Supplier Details','388'],
+  ['Supplier type','supplier.type','Standard','Supplier Details','221'],
+  ['D-U-N-S number','supplier.duns','Standard','Supplier Details','395'],
+  ['Website','supplier.website','Standard','Supplier Details','29'],
+  ['Industry classification','supplier.naics','Standard','Supplier Details','59'],
+  ['Supplier number','supplier.number','Standard','Supplier Details','113'],
+  ['Country/Region','supplier.country_region','Standard','Tax registration','54'],
+  ['Tax Type','supplier.tax_type','Standard','Tax registration','138'],
+  ['Tax ID','supplier.tax_id','Standard','Tax registration','56'],
+  ['Primary contact','supplier.primary_contact','Standard','Supplier contacts','236'],
+  ['Standard contact','supplier.standard_contact','Standard','Supplier contacts','273'],
+  ['Primary address','supplier.primary_address','Standard','Supplier addresses','137'],
+  ['Standard address','supplier.standard_address','Standard','Supplier addresses','260'],
+  ['Supplier risk tier','custom.supplier_risk_tier','Custom','Risk','164'],
+  ['Sustainability score','custom.sustainability_score','Custom','Enterprise Supplier Data','24'],
+  ['Cost centre code','custom.cost_centre_code','Custom','Details','87'],
+  ['Preferred vendor','custom.preferred_supplier','Custom','Details','240'],
+  ['Vendor class','custom.erp_vendor_class','Custom','Classification','126'],
+  ['Onboarding owner','custom.onboarding_owner','Custom','Details','16'],
+  ['Questionnaire reference','custom.questionnaire_ref','Custom','Risk','433'],
+  ['Payment terms note','custom.payment_terms_note','Custom','Enterprise Supplier Data','90'],
+  ['Legacy vendor ID','custom.legacy_vendor_id','Custom','Details','37'],
+  ['Spend band','custom.spend_band','Custom','Classification','332'],
+  ['Site manager','custom.site_manager','Custom','Sites','195'],
+  ['Site region','custom.site_region','Custom','Sites','380'],
+  ['VAT scheme','custom.vat_scheme','Custom','Tax','9'],
+  ['Withholding code','custom.withholding_code','Custom','Tax','325'],
+  ['Ultimate parent','custom.ultimate_parent','Custom','Enterprise Supplier Data','390'],
+  ['Commodity code','custom.commodity_code','Custom','Classification','321'],
+  ['Delivery instructions','custom.delivery_instructions','Custom','Addresses','41'],
+  ['Address contact','custom.address_contact','Custom','Addresses','216'],
+  ['Legacy buyer code','custom.legacy_buyer_code','Custom','Details','111'],
+  ['Temporary site flag','custom.temp_site_flag','Custom','Sites','59'],
+  ['Retired segment','custom.retired_segment','Custom','Classification','24'],
+  ['ESG survey 2019','custom.esg_survey_2019','Custom','Enterprise Supplier Data','198'],
+  ['Legacy risk flag','custom.legacy_risk_flag','Custom','Risk','254'],
+  ['Old tax form ref','custom.old_tax_form_ref','Custom','Tax','90'],
+  ['Legacy address note','custom.legacy_address_note','Custom','Addresses','260'],
+];
+
+const DISC_TOTAL = '12,004';
+const DISC_HEADS = ['Field','Type','Section','Suppliers with discrepancy','Report','Upload corrections'];
+/* 1098px of card interior; Report is sized so the button clears its padding and
+   Upload is wide enough to hold the chip, the file name and Remove. */
+const DISC_COLS  = '238px 92px 196px 178px 160px 234px';
+
+/* Per-row state machine: idle -> downloaded -> uploaded. The Upload control is
+   inert until that row's CSV has been downloaded, which is the gate the user
+   asked for; "Remove" drops back to downloaded so it can be re-uploaded. */
+const DISC_STATE = {};
+DISC_ROWS.forEach(r => { DISC_STATE[r[1]] = 'idle'; });
+
+const discSlug = key => key.split('.').pop();
+
+function discReportCell(key){
+  if (DISC_STATE[key] === 'idle')
+    return `<button type="button" class="dbtn" data-dl="${key}">Download CSV</button>`;
+  /* The column is too narrow for the file name, so the Upload cell is where the
+     name is shown; here the button collapsing to a link is the state change. */
+  return `<div class="dstack">
+      <span class="nm">Downloaded</span>
+      <button type="button" class="dlink" data-dl="${key}">Download again</button>
+    </div>`;
+}
+
+function discUploadCell(key){
+  const st = DISC_STATE[key];
+  if (st === 'idle')
+    return `<button type="button" class="dbtn" disabled
+              title="Download this field's CSV before uploading corrections">Upload file</button>`;
+  if (st === 'downloaded')
+    return `<button type="button" class="dbtn" data-up="${key}">Upload file</button>`;
+  return `<div class="dstack">
+      <div class="chip green" style="height:24px"><div class="typo"><p>Uploaded</p></div></div>
+      <span class="nm">${discSlug(key)}_corrected.csv</span>
+      <button type="button" class="dlink" data-up="${key}">Remove</button>
+    </div>`;
+}
+
+function discRow(r){
+  const [name, key, type, section, count] = r;
+  return [name, type, section].map(v => `<div class="tcell"><div class="box"><p class="p1">${v}</p></div></div>`).join('')
+    + `<div class="tcell"><div class="box"><p class="dcount">${count} <span class="dof">of ${DISC_TOTAL}</span></p></div></div>`
+    + `<div class="tcell" data-dcell="${key}:report">${discReportCell(key)}</div>`
+    + `<div class="tcell" data-dcell="${key}:upload">${discUploadCell(key)}</div>`;
+}
+
+/* Only the two action cells of one row ever change, so re-render just those
+   instead of rebuilding a 39-row table on every click. */
+function discSync(key){
+  ['report','upload'].forEach(slot => {
+    const cell = document.querySelector(`#fields [data-dcell="${key}:${slot}"]`);
+    if (cell) cell.innerHTML = slot === 'report' ? discReportCell(key) : discUploadCell(key);
+  });
+}
+
+function discDownload(key){
+  if (DISC_STATE[key] === 'idle') DISC_STATE[key] = 'downloaded';
+  discSync(key);
+}
+
+function discUploadToggle(key){
+  if (DISC_STATE[key] === 'downloaded')      DISC_STATE[key] = 'uploaded';
+  else if (DISC_STATE[key] === 'uploaded')   DISC_STATE[key] = 'downloaded';
+  discSync(key);
+}
+
+function discHeader(){
+  const std = DISC_ROWS.filter(r => r[2] === 'Standard').length;
+  return `<div class="card pad" style="width:1146px">
+    <div style="width:1098px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;min-height:24px">
+        <div class="h-card">Supplier fields discrepancies</div>
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div class="chip neutral" style="height:24px"><div class="typo"><p>${DISC_ROWS.length} fields with discrepancies</p></div></div>
+          <div class="chip neutral" style="height:24px"><div class="typo"><p>${std} Standard</p></div></div>
+          <div class="chip orange" style="height:24px"><div class="typo"><p>${DISC_ROWS.length - std} Custom</p></div></div>
+        </div>
+      </div>
+      <div style="margin-top:4px;font-size:14px;font-weight:400;line-height:20px;color:var(--t2)">All standard and custom fields on the Supplier record, with the number of suppliers whose SIM value differs from the Supplier record value. Download a CSV for supplier details with both values.</div>
+    </div>
+  </div>`;
+}
+
+function discAlert(){
+  return `<div class="card" style="width:1146px;padding:0;border:none;box-shadow:none;background:transparent">
+    <div class="alert info">
+      <div class="ih"><div class="ico20"><img src="assets/info-outline.svg" width="20" height="20" alt=""></div></div>
+      <div class="content">
+        <div class="titlerow"><p class="atitle">Review, then upload corrections</p><div class="btnbox"></div></div>
+        <p class="abody">Download a field&rsquo;s CSV to compare the SIM and Supplier Record values side by side. The upload becomes available for that field once its report has been downloaded.</p>
+      </div>
+    </div>
+  </div>`;
+}
+
+function discTable(){
+  const heads = DISC_HEADS.map(h => `<div class="thead"><p><span class="b">${h}</span></p></div>`).join('');
+  return `<div class="card pad" style="width:1146px">
+    <div class="tbl" style="grid-template-columns:${DISC_COLS}">${heads}${DISC_ROWS.map(discRow).join('')}</div>
+  </div>`;
+}
+
+function fieldsScreen(){
+  const inner = `
+    ${dialogTitle(false)}
+    <div style="display:flex;flex-direction:column;gap:16px;width:1146px;padding-bottom:24px">
+      ${stepper(3,1146)}
+      ${discHeader()}
+      ${discAlert()}
+      ${discTable()}
+    </div>`;
+  return wideScreen('fields', 4, 108, inner,
+    bottomBar({x:3, y:949, label:'Continue', w:112, h:40,
+               act:'go-step3', backAct:'go-step2'}));
+}
+
+/* The four cards are component sets with two variant properties — erp and
+   integration — so each one is a small state machine. "integration" cards
+   (Sites, Remit-to) always ask a follow-up; "reference" cards (Contacts,
+   Addresses) only ask one when the first answer is No.
+   Grid order is row-major: Sites | Remit-to / Contacts | Addresses. */
+const GUIDE_LINK = 'Guide to change integrations';
+
+const S3_CARDS = [
+  {key:'sites', kind:'integration',
+   title:'Supplier Sites',
+   sub:'Review how SIM sites will be matched to Supplier Record sites and update integrations if needed.',
+   stats:[['SIM Sites','12,480'],['Supplier record Sites','12,004']],
+   q1:'Does your ERP store the Coupa Site ID?',
+   q2:{yes:{q:'Would you like to change your integration and send Coupa site id?',
+            hint:'Sites on the Supplier record will be in sync with the sites on SIM (today)'},
+       no: {q:'Would you like to start storing it and make the required integration changes?'}},
+   /* 717:2239 / 719:3986 — the Remit-to card reuses this exact string. */
+   noConfig:'No configuration is required for Supplier Sites.'},
+
+  {key:'remit', kind:'integration',
+   title:'Supplier Remit-to',
+   sub:'Review how SIM remit-to addresses will be matched to Supplier Record remit-to addresses and update integrations if needed.',
+   stats:[['SIM Remit-to','9,117'],['Supplier record Remit-to','8,950']],
+   q1:'Does your ERP store the Coupa Remit-to address ID?',
+   q2:{yes:{q:'Would you like to change your integration and send Coupa remit-to address id?',
+            hint:'Remit-to addresses on the Supplier record will be in sync with the remit-to addresses on SIM (today)'},
+       no: {q:'Would you like to start storing it and make the required integration changes?'}},
+   noConfig:'No configuration is required for Supplier Sites.'},
+
+  {key:'contacts', kind:'reference',
+   title:'Supplier Contacts',
+   sub:'Review how SIM contacts will be matched to supplier record contacts.',
+   stats:[['SIM Contacts','31,240'],['Supplier Record Contacts','30,115']],
+   q1:'Do you provide a reference code from ERP for every contact on the supplier record?',
+   q2:{no:{q:'Would you like to send a reference code from ERP?'}},
+   changeBody:'Send a unique reference code from ERP for every contact on the supplier record. This change is mandatory to adopt Unified Supplier.'},
+
+  {key:'addresses', kind:'reference',
+   title:'Supplier Addresses',
+   sub:'Review how SIM addresses will be matched to Supplier Record addresses.',
+   stats:[['SIM Addresses','18,760'],['Supplier Record Addresses','18,102']],
+   q1:'Do you provide a reference code from ERP for every address on the supplier record?',
+   q2:{no:{q:'Would you like to send a reference code from ERP?'}},
+   changeBody:'Send a unique reference code from ERP for every address on the supplier record. This change is mandatory to adopt Unified Supplier.'},
+];
+
+const S3_STATE = {};
+S3_CARDS.forEach(c => { S3_STATE[c.key] = {erp:null, integration:null}; });
+
+function s3Radio(key, prop, val, label, on){
+  const icon = on
+    ? `<span class="s3rb"><img src="assets/radio-selected.svg" width="24" height="24" alt=""></span>`
+    : `<img src="assets/radio-empty.svg" width="32" height="32" alt="">`;
+  return `<label class="s3radio" data-s3="${key}:${prop}:${val}">${icon}<span class="lbl">${label}</span></label>`;
+}
+
+function s3Question(key, prop, text, hint, picked){
+  return `<div class="s3q">
+      <div class="lbw">
+        <div class="lb">${text}</div>
+        ${hint ? `<div class="hint">${hint}</div>` : ''}
+      </div>
+      <div class="s3radios">
+        ${s3Radio(key, prop, 'yes', 'Yes', picked === 'yes')}
+        ${s3Radio(key, prop, 'no',  'No',  picked === 'no')}
+      </div>
+    </div>`;
+}
+
+/* Heights are the design's own per-instance values; a single-line alert is
+   deliberately shorter than its line box (39 / 48) and the title is trimmed. */
+function s3Alert(h, title, desc){
+  return `<div class="s3alert" style="height:${h}px">
+      <div class="ac">
+        <div class="at"><p>${title}</p></div>
+        ${desc || ''}
+      </div>
+    </div>`;
+}
+
+function s3Alerts(c, st){
+  if (c.kind === 'integration') {
+    if (st.integration === 'yes')
+      return s3Alert(99,
+        'To complete this configuration, check out the integration guide and make the required changes.',
+        `<p class="ad lk">${GUIDE_LINK}</p>`);
+    if (st.integration === 'no') return s3Alert(48, c.noConfig);
+    return '';
+  }
+  if (st.erp === 'yes') return s3Alert(39, 'No changes required');
+  if (st.integration === 'yes')
+    return s3Alert(113, 'Integrations Change Required',
+      `<p class="ad">${c.changeBody}<br><span class="lk">${GUIDE_LINK}</span></p>`);
+  if (st.integration === 'no') return s3Alert(39, 'No changes required');
+  return '';
+}
+
+function s3Card(c){
+  const st = S3_STATE[c.key];
+  /* A "reference" card stops at the first question when the answer is Yes. */
+  const follow = st.erp && c.q2[st.erp];
+  return `<div class="card s3card" data-card="${c.key}">
+    <div class="ttl">
+      <div class="h4">${c.title}</div>
+      <p>${c.sub}</p>
+    </div>
+    <div class="s3stats">
+      ${c.stats.map(([l,v]) => `<div class="s3box"><div class="lb">${l}</div><div class="vl">${v}</div></div>`).join('')}
+    </div>
+    ${s3Question(c.key, 'erp', c.q1, null, st.erp)}
+    ${follow ? s3Question(c.key, 'integration', follow.q, follow.hint, st.integration) : ''}
+    ${s3Alerts(c, st)}
+  </div>`;
+}
+
+function s3Pick(spec){
+  const [key, prop, val] = spec.split(':');
+  const st = S3_STATE[key];
+  if (st[prop] === val) return;
+  st[prop] = val;
+  /* Changing the first answer rewrites the follow-up question, so the answer
+     to the old wording cannot be carried over. */
+  if (prop === 'erp') st.integration = null;
+  const host = document.querySelector(`#step3 [data-card="${key}"]`);
+  if (host) host.outerHTML = s3Card(S3_CARDS.find(c => c.key === key));
+}
+
+function step3Screen(){
+  const inner = `
+    ${dialogTitle(false)}
+    <div style="position:relative;width:1146px;padding-bottom:24px">
+      ${stepper(4,1146)}
+      <div style="position:relative;margin-top:16px;width:1146px;padding-top:32px">
+        <div style="position:relative;width:1098px;height:80px">
+          <div class="h4" style="width:470px;height:32px">Sub-object matching keys</div>
+          <div style="position:absolute;left:0;top:40px;width:1098px;height:40px;font-size:14px;font-weight:400;line-height:20px;color:var(--t2)">Sub-objects have many rows per supplier, so a matching approach is required to connect a SIM record to the corresponding Supplier Record row. Use the integration guide below to make the required changes.</div>
+        </div>
+        <div class="s3grid">${S3_CARDS.map(s3Card).join('')}</div>
+      </div>
+    </div>`;
+  return wideScreen('step3', 4, 108, inner,
+    bottomBar({x:3, y:949, label:'Confirm Changes', w:161, h:42,
+               act:'open-modal', backAct:'go-fields'}));
+}
+
+/* ---------------------------------------------------------- setup screen --- */
+const SETUP = JSON.parse(document.getElementById('setup-data').textContent);
+const ENTRY_LINK = 'Prepare to adopt Unified Supplier';
+
+function setupScreen(){
+  const colX = {c1:0, c2:328.19, c3:656};
+  const cols = Object.keys(colX).map(k => `
+    <div class="setup-col" style="left:${colX[k]}px">
+      ${SETUP[k].map(p => `
+        <div class="setup-panel">
+          <h3>${esc(p.title)}</h3>
+          <ul>${p.items.map(it => it === ENTRY_LINK
+              ? `<li><a data-act="go-step1a">${esc(it)}</a></li>`
+              : `<li><a href="#" onclick="return false">${esc(it)}</a></li>`).join('')}
+          </ul>
+        </div>`).join('')}
+    </div>`).join('');
+  return `<section class="screen" id="setup"><div class="frame h1041">
+    ${header()}${mainnav()}<div class="band bluebar"></div>${secnav()}
+    <div class="setup-main">
+      <div class="setup-border">
+        <div class="setup-h1"><h1>Setup</h1></div>
+        <div class="setup-cont">
+          <div class="setup-filter">
+            <div class="inner">
+              <div class="lab">Find it fast! Use the Instant Filter</div>
+              <div class="inp"></div>
+              <div class="clr">&times;</div>
+            </div>
+          </div>
+          <div class="setup-cols" style="height:3040px">${cols}</div>
+        </div>
+      </div>
+    </div>
+  </div></section>`;
+}
+
+/* ------------------------------------------------------------- assemble --- */
+document.getElementById('stage').innerHTML = [
+  setupScreen(),
+  /* 280:16347 — unchecked, Continue at 50% and inert */
+  step1Screen('step1a', {checked:false, chips:true, dimmed:true, inert:true,  toggle:'go-step1b'}),
+  /* 280:14468 — checked, Continue solid */
+  step1Screen('step1b', {checked:true,  chips:true, next:'go-step2a',         toggle:'go-step1a'}),
+  step2Screen('step2a','details'),
+  step2Screen('step2b','addresses'),
+  fieldsScreen(),
+  step3Screen(),
+  err1Screen(),
+  /* 347:13490 — unchecked; Continue keeps the 50% look but carries the
+     reaction that raises err1 (that click is what produces the error) */
+  errStepperTop('err2', {checked:false, chips:true, dimmed:true, next:'go-err1', toggle:'go-err3'}),
+  /* 347:13715 — checked, Continue solid */
+  errStepperTop('err3', {checked:true,  chips:true, next:'go-err4',             toggle:'go-err2'}),
+  err4Screen(),
+].join('');
+
+/* ------------------------------------------------------------ navigation --- */
+let lastStep2 = 'step2a';
+const scrim = document.getElementById('scrim');
+
+function show(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id));
+  if (id === 'step2a' || id === 'step2b') lastStep2 = id;
+  document.querySelectorAll('#protobar button[data-go]').forEach(b =>
+    b.classList.toggle('cur', b.dataset.go === id));
+  document.querySelectorAll('.wpage').forEach(p => p.scrollTop = 0);
+  const sc = document.querySelector('#setup .setup-cont');
+  if (id === 'setup' && sc) sc.scrollTop = 0;
+  window.scrollTo(0,0);
+}
+
+const ACTIONS = {
+  'go-step1a':  () => show('step1a'),
+  'go-step1b':  () => show('step1b'),
+  'go-step2a':  () => show('step2a'),
+  'go-step2':   () => show(lastStep2),
+  'go-fields':  () => show('fields'),
+  'go-step3':   () => show('step3'),
+  'go-setup':   () => show('setup'),
+  'tab-details':   () => show('step2a'),
+  'tab-addresses': () => show('step2b'),
+  'go-err1': () => show('err1'),
+  'go-err2': () => show('err2'),
+  'go-err3': () => show('err3'),
+  'go-err4': () => show('err4'),
+  'err1-check': () => show('err3'),
+  'err4-check': () => show('err2'),
+  'open-modal':  () => scrim.classList.add('on'),
+  'modal-close': () => scrim.classList.remove('on'),
+  'modal-confirm': () => { scrim.classList.remove('on'); show('setup'); },
+};
+
+document.addEventListener('click', (e) => {
+  const r = e.target.closest('[data-s3]');
+  if (r) { e.preventDefault(); s3Pick(r.dataset.s3); return; }
+  const dl = e.target.closest('[data-dl]');
+  if (dl) { e.preventDefault(); discDownload(dl.dataset.dl); return; }
+  const up = e.target.closest('[data-up]');
+  if (up) { e.preventDefault(); discUploadToggle(up.dataset.up); return; }
+  const t = e.target.closest('[data-act]');
+  if (t && t.dataset.act && ACTIONS[t.dataset.act]) { e.preventDefault(); ACTIONS[t.dataset.act](); return; }
+  const g = e.target.closest('#protobar button[data-go]');
+  if (g) { scrim.classList.remove('on'); show(g.dataset.go); }
+});
+scrim.addEventListener('click', (e) => { if (e.target === scrim) scrim.classList.remove('on'); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') scrim.classList.remove('on'); });
+
+/* deep link: #step2b etc. jumps straight to a screen */
+const start = location.hash.slice(1);
+show(document.getElementById(start) ? start : 'setup');
+window.addEventListener('hashchange', () => {
+  const id = location.hash.slice(1);
+  if (document.getElementById(id)) show(id);
+});
+</script>
+</body>
+</html>
