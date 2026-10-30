@@ -1,0 +1,19 @@
+vercel.json
+  s_6c2cb4d352adca::t_13db39d07d20bb 1-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2dd81a8819de4973a247996cf1f2417e9972e9f9",
+  "prompts": {},
+  "sessions": {
+    "s_6c2cb4d352adca": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "27776be0-cce2-46de-9e28-fee8f3a7d31c",
+        "model": "claude-opus-5"
+      },
+      "human_author": "cristianbeltran-glitch <cristianbeltran-glitch@users.noreply.github.com>"
+    }
+  }
+}
